@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-5 col-sm-10">
+            <div class="auth-container p-5 fade-in">
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                    <h2 class="fw-bold">Create Account</h2>
+                    <p class="text-muted">Join our attendance system</p>
+                </div>
+
+                
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" name="full_name" class="form-control" 
+                                       placeholder="Enter your full name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" name="email" class="form-control" 
+                                       placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Employee ID</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="text" name="employee_id" class="form-control" 
+                                       placeholder="e.g., EMP001" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Department</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <select name="department" class="form-select" required>
+                                    <option value="">Select Your Department</option>
+                                    <option value="HR">Human Resources (HR)</option>
+                                    <option value="IT">Information Technology (IT)</option>
+                                    <option value="Finance">Finance & Accounts</option>
+                                    <option value="Marketing">Marketing & Sales</option>
+                                    <option value="Operations">Operations</option>
+                                    <option value="R&D">Research & Development</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Support">Customer Support</option>
+                                    <option value="Admin">Administration</option>
+                                    <option value="Production">Production</option>
+                                    <option value="Quality">Quality Assurance</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="password1" class="form-control" 
+                                       placeholder="Create password" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="password2" class="form-control" 
+                                       placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Password requirements -->
+                    <div class="alert alert-info small">
+                        <strong>Password requirements:</strong>
+                        <ul class="mb-0">
+                            <li>At least 8 characters</li>
+                            <li>Can't be too common</li>
+                            <li>Can't be entirely numeric</li>
+                        </ul>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">Already have an account? 
+                            <a href="{% url 'login' %}" class="text-decoration-none">Sign in here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-select {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 8px 12px;
+        transition: border-color 0.3s ease;
+    }
+    
+    .form-select:focus {
+        border-color: #667eea;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+    }
+</style>
+{% endblock %}

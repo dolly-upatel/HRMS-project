@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="dashboard-card p-4 fade-in">
+                <div class="text-center mb-4">
+                    <i class="fas fa-fingerprint fa-3x text-primary mb-3"></i>
+                    <h2 class="fw-bold">Mark Attendance</h2>
+                    <p class="text-muted">{{ today|date:"l, F d, Y" }}</p>
+                </div>
+                
+                <div class="row text-center mb-5">
+                    <div class="col-md-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-number">{{ now|time:"H:i" }}</div>
+                            <small class="text-muted">Current Time</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-number">
+                                {% if attendance.check_in %}
+                                {{ attendance.check_in|time:"H:i" }}
+                                {% else %}
+                                --
+                                {% endif %}
+                            </div>
+                            <small class="text-muted">Check In Time</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if not attendance.check_in %}
+                        <button type="submit" name="action" value="check_in" 
+                                class="btn btn-success attendance-btn me-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Check In
+                        </button>
+                        {% endif %}
+                        
+                        {% if attendance.check_in and not attendance.check_out %}
+                        <button type="submit" name="action" value="check_out" 
+                                class="btn btn-danger attendance-btn">
+                            <i class="fas fa-sign-out-alt me-2"></i>Check Out
+                        </button>
+                        {% endif %}
+                        
+                        {% if attendance.check_in and attendance.check_out %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            You have completed your attendance for today.
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+                
+                {% if attendance %}
+                <div class="mt-5">
+                    <h5 class="fw-bold mb-3">Today's Record</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Date</th>
+                                <td>{{ attendance.date|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Check In</th>
+                                <td>{{ attendance.check_in|time:"H:i"|default:"Not checked in" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Check Out</th>
+                                <td>{{ attendance.check_out|time:"H:i"|default:"Not checked out" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    <span class="badge bg-{% if attendance.status == 'PRESENT' %}success{% else %}warning{% endif %}">
+                                        {{ attendance.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
